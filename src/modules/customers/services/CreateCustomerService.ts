@@ -10,7 +10,7 @@ interface ICreateCustomer {
 export default class CreateCustomerService {
   public async execute({ name, email }: ICreateCustomer): Promise<Customer> {
     const emailExists = await customerRepository.findByEmail(email);
-
+    console.log(emailExists);
     if (emailExists) {
       throw new AppError('Email address already used.', 409);
     }
