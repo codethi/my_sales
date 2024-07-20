@@ -2,9 +2,9 @@ import AppError from '@shared/errors/AppError';
 import path from 'path';
 import uploadConfig from '@config/upload';
 import fs from 'fs';
-import User from '../infra/database/entities/User';
 import { IUsersRepository } from '../domain/repositories/IUserRepositories';
 import { inject, injectable } from 'tsyringe';
+import { User } from '../infra/database/entities/User';
 
 interface IRequest {
   userId: string;

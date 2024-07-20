@@ -1,6 +1,5 @@
 import { inject, injectable } from 'tsyringe';
 import { IUsersRepository } from '../domain/repositories/IUserRepositories';
-import User from '../infra/database/entities/User';
 import { SearchParams } from '../infra/database/repositories/UsersRepository';
 import { IPaginateUser } from '../domain/models/IPaginateUser';
 @injectable()

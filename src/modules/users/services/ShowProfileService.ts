@@ -1,7 +1,7 @@
 import AppError from '@shared/errors/AppError';
-import User from '../infra/database/entities/User';
 import { IUsersRepository } from '../domain/repositories/IUserRepositories';
 import { inject } from 'tsyringe';
+import { User } from '../infra/database/entities/User';
 
 interface IRequest {
   user_id: string;
