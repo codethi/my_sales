@@ -1,8 +1,8 @@
 import AppError from '@shared/errors/AppError';
 import { compare, hash } from 'bcrypt';
-import User from '../infra/database/entities/User';
 import { inject, injectable } from 'tsyringe';
 import { IUsersRepository } from '../domain/repositories/IUserRepositories';
+import { User } from '../infra/database/entities/User';
 
 interface IRequest {
   user_id: string;

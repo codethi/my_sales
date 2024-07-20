@@ -1,6 +1,6 @@
 import CreateOrderService from '@modules/orders/services/CreateOrderService';
 import ListOrderService from '@modules/orders/services/ListOrderService';
-import { ShowOrderService } from '@modules/orders/services/ShowOrderService';
+import ShowOrderService from '@modules/orders/services/ShowOrderService';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
@@ -20,7 +20,7 @@ export default class OrdersController {
 
     const showOrder = container.resolve(ShowOrderService);
 
-    const order = await showOrder.execute(id);
+    const order = await showOrder.execute({ id });
 
     return response.json(order);
   }
