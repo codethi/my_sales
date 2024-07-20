@@ -3,6 +3,7 @@ import { IFindProducts } from '../models/IFindProducts';
 import { ICreateProduct } from '../models/ICreateProduct';
 import { IUpdateStockProduct } from '../models/IUpdateStockProduct';
 import { IProductPaginate } from '../models/IProductPaginate';
+import { Product } from '@modules/products/infra/database/entities/Product';
 
 type SearchParams = {
   page: number;
@@ -16,7 +17,7 @@ export interface IProductsRepository {
   findAll({ page, skip, take }: SearchParams): Promise<IProductPaginate>;
   findAllByIds(products: IFindProducts[]): Promise<IProduct[]>;
   create(data: ICreateProduct): Promise<IProduct>;
-  save(product: IProduct): Promise<IProduct>;
+  save(product: Product): Promise<IProduct>;
   updateStock(products: IUpdateStockProduct[]): Promise<void>;
-  remove(product: IProduct): Promise<void>;
+  remove(product: Product): Promise<void>;
 }

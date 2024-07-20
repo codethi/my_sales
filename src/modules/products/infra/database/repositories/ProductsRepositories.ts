@@ -1,11 +1,12 @@
 import { In, Repository } from 'typeorm';
-import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
 import { IFindProducts } from '@modules/products/domain/models/IFindProducts';
 import { ICreateProduct } from '@modules/products/domain/models/ICreateProduct';
 import { IUpdateStockProduct } from '@modules/products/domain/models/IUpdateStockProduct';
 import { IProductPaginate } from '@modules/products/domain/models/IProductPaginate';
 import { AppDataSource } from '@shared/infra/typeorm/data-source';
 import { Product } from '../entities/Product';
+import { IProductsRepository } from '@modules/products/domain/repositories/IProductsRepository';
+import { IProduct } from '@modules/products/domain/models/IProduct';
 
 type SearchParams = {
   page: number;
@@ -24,18 +25,17 @@ class ProductsRepository implements IProductsRepository {
     name,
     price,
     quantity,
-  }: ICreateProduct): Promise<Product> {
+  }: ICreateProduct): Promise<IProduct> {
     const product = this.ormRepository.create({ name, price, quantity });
 
     await this.ormRepository.save(product);
 
-    return product;
+    return product as unknown as IProduct;
   }
 
-  public async save(product: Product): Promise<Product> {
+  public async save(product: Product): Promise<IProduct> {
     await this.ormRepository.save(product);
-
-    return product;
+    return product as unknown as IProduct;
   }
 
   public async remove(product: Product): Promise<void> {
@@ -46,18 +46,18 @@ class ProductsRepository implements IProductsRepository {
     await this.ormRepository.save(products);
   }
 
-  public async findByName(name: string): Promise<Product | null> {
+  public async findByName(name: string): Promise<IProduct | null> {
     const product = this.ormRepository.findOneBy({
       name,
     });
 
-    return product;
+    return product as unknown as IProduct | null;
   }
 
-  public async findById(id: string): Promise<Product | null> {
+  public async findById(id: string): Promise<IProduct | null> {
     const product = this.ormRepository.findOneBy({ id });
 
-    return product;
+    return product as unknown as IProduct;
   }
 
   public async findAll({
@@ -78,10 +78,10 @@ class ProductsRepository implements IProductsRepository {
       data: products,
     };
 
-    return result;
+    return result as unknown as IProductPaginate;
   }
 
-  public async findAllByIds(products: IFindProducts[]): Promise<Product[]> {
+  public async findAllByIds(products: IFindProducts[]): Promise<IProduct[]> {
     const productIds = products.map(product => product.id);
 
     const existentProducts = await this.ormRepository.find({
@@ -90,7 +90,7 @@ class ProductsRepository implements IProductsRepository {
       },
     });
 
-    return existentProducts;
+    return existentProducts as unknown as IProduct[];
   }
 }
 
