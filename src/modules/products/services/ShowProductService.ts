@@ -19,7 +19,7 @@ class ShowProductService {
       throw new AppError('Product not found.', 404);
     }
 
-    return product as Product;
+    return product as unknown as Product;
   }
 }
 

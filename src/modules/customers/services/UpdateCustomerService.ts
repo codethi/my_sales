@@ -1,38 +1,39 @@
 import AppError from '@shared/errors/AppError';
-import { Customer } from '../infra/database/entities/Customer';
 import { ICustomersRepository } from '../domain/repositories/ICustomersRepositories';
-
-interface IUpdateCustomer {
-  id: number;
-  name: string;
-  email: string;
-}
-
-export default class UpdateCustomerService {
-  constructor(private readonly customerRepository: ICustomersRepository) {}
+import { inject, injectable } from 'tsyringe';
+import { IUpdateCustomer } from '../domain/models/IUpdateCustomer';
+import { Customer } from '../infra/database/entities/Customer';
+@injectable()
+class UpdateCustomerService {
+  constructor(
+    @inject('CustomersRepository')
+    private customersRepository: ICustomersRepository,
+  ) {}
 
   public async execute({
     id,
     name,
     email,
   }: IUpdateCustomer): Promise<Customer> {
-    const customer = await this.customerRepository.findById(id);
+    const customer = await this.customersRepository.findById(Number(id));
 
     if (!customer) {
-      throw new AppError('Customer not found.', 404);
+      throw new AppError('Customer not found.');
     }
 
-    const customerExists = await this.customerRepository.findByEmail(email);
+    const customerExists = await this.customersRepository.findByEmail(email);
 
     if (customerExists && email !== customer.email) {
-      throw new AppError('There is already one customer with this email.', 409);
+      throw new AppError('There is already one customer with this email.');
     }
 
     customer.name = name;
     customer.email = email;
 
-    await this.customerRepository.save(customer);
+    await this.customersRepository.save(customer);
 
     return customer;
   }
 }
+
+export default UpdateCustomerService;

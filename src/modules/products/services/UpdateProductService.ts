@@ -42,9 +42,9 @@ class UpdateProductService {
     product.price = price;
     product.quantity = quantity;
 
-    await this.productsRepository.save(product);
+    await this.productsRepository.save(product as unknown as Product);
 
-    return product as Product;
+    return product as unknown as Product;
   }
 }
 

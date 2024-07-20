@@ -2,6 +2,7 @@ import AppError from '@shared/errors/AppError';
 import RedisCache from '@shared/cache/RedisCache';
 import { inject, injectable } from 'tsyringe';
 import { IProductsRepository } from '../domain/repositories/IProductsRepository';
+import { Product } from '../infra/database/entities/Product';
 
 interface IRequest {
   id: string;
@@ -23,7 +24,7 @@ class DeleteProductService {
 
     await redisCache.invalidate('api-vendas-PRODUCT_LIST');
 
-    await this.productsRepository.remove(product);
+    await this.productsRepository.remove(product as unknown as Product);
   }
 }
 

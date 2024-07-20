@@ -1,7 +1,7 @@
 import { AppDataSource } from '@shared/infra/typeorm/data-source';
 import { App } from 'supertest/types';
 import appPromise from '@shared/infra/http/server';
-
+import request from 'supertest';
 describe('Create Customer', () => {
   let app: App;
 
@@ -19,4 +19,6 @@ describe('Create Customer', () => {
     }
     await AppDataSource.destroy();
   });
+
+  
 });
